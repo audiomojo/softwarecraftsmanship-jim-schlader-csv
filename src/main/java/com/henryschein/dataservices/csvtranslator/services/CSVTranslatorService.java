@@ -19,8 +19,6 @@ public class CSVTranslatorService {
 
     public String translateCSV(String csv) {
         List<List<String>> parsedCSV = csvParser.parseCSV(csv);
-
-        String response = csvTranslator.translateCSV(parsedCSV);
-        return response;
+        return csvTranslator.translateCSV(parsedCSV);
     }
 }
