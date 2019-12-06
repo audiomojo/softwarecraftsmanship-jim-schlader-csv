@@ -11,16 +11,9 @@ public class CSVParser {
     public List<List<String>> parseCSV(String csv) {
         List<List<String>> response = new ArrayList<>();
         List<String> responseList;
-
         String carriageFree = csv.replace("\r", "" );
         responseList = Arrays.asList(carriageFree.split("\n"));
-
-        for (String s : responseList) {
-            List<String> current =
-                    new ArrayList<>(Arrays.asList(replaceInternalQuotes(s).split(",")));
-            response.add(prepareOutput(current));
-        }
-
+        responseList.forEach(text -> response.add(prepareOutput(new ArrayList<>(Arrays.asList(replaceInternalQuotes(text).split(","))))));
         return response;
     }
 
@@ -44,11 +37,10 @@ public class CSVParser {
     }
 
     private List<String> prepareOutput (List<String> strings){
-       List<String> output = Collections.unmodifiableList(strings
-               .stream()
-               .map(item -> item.replace('"', ' ').trim())
-               .map(item-> item.replace("@@@", ","))
-               .collect(Collectors.toList()));
-        return output;
+        return strings
+                .stream()
+                .map(item -> item.replace('"', ' ').trim())
+                .map(item-> item.replace("@@@", ","))
+                .collect(Collectors.toList());
     }
 }
