@@ -1,8 +1,11 @@
 package com.henryschein.dataservices.csvtranslator.services;
 
+import com.henryschein.dataservices.csvtranslator.TranslatorScanner;
 import com.henryschein.dataservices.csvtranslator.interfaces.Translator;
 import com.henryschein.dataservices.csvtranslator.parser.CSVParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,18 +18,13 @@ public class CSVTranslatorService {
     @Autowired
     CSVParser csvParser;
     @Autowired
-    Translator bracketTranslator;
-    @Autowired
-    Translator reverseTranslator;
-
-    private static Map<String, Translator> translators = new HashMap<>();
+    TranslatorScanner translatorScanner;
 
     public String translateCSV(String csv, String type) {
-        translators.putIfAbsent("bracket", bracketTranslator);
-        translators.putIfAbsent("reverse", reverseTranslator);
+
         List<List<String>> parsedCSV = csvParser.parseCSV(csv);
-        Set<String> keys = translators.keySet();
+        Set<String> keys = translatorScanner.getTranslatorMap().keySet();
         if(!keys.contains(type)) type = "bracket";
-        return translators.get(type).Translate(parsedCSV);
+        return translatorScanner.getTranslatorMap().get(type).Translate(parsedCSV);
     }
 }

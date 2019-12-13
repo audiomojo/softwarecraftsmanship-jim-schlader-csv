@@ -1,6 +1,6 @@
 package com.henryschein.dataservices.csvtranslator;
 
-import com.henryschein.dataservices.csvtranslator.translator.CSVTranslator;
+import com.henryschein.dataservices.csvtranslator.csvtranslators.BracketTranslator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,14 +10,14 @@ import java.util.List;
 import static java.util.Collections.*;
 import static org.junit.Assert.assertEquals;
 
-public class CSVTranslatorTests {
-    private CSVTranslator translator;
+public class BracketTranslatorTests {
+    private BracketTranslator translator;
     private List<List<String>> testList;
     private List<String> text;
 
     @Before
     public void setup(){
-        translator = new CSVTranslator();
+        translator = new BracketTranslator();
         testList = new ArrayList<>();
         text = new ArrayList<>();
     }
@@ -26,7 +26,7 @@ public class CSVTranslatorTests {
     public void Test_TranslateCSVData_EmptyString(){
         text.add("");
         testList.add(text);
-        assertEquals("empty string should return empty brackets", "[]\n", translator.translateCSV(unmodifiableList(testList)));
+        assertEquals("empty string should return empty brackets", "[]\n", translator.Translate(unmodifiableList(testList)));
 
     }
 
@@ -34,7 +34,7 @@ public class CSVTranslatorTests {
     public void Test_TranslateCSVData_SingleLine(){
         text.add(" Some text ");
         testList.add(text);
-        assertEquals("single line of text should map to itself inside brackets", "[Some text]\n", translator.translateCSV(unmodifiableList(testList)) );
+        assertEquals("single line of text should map to itself inside brackets", "[Some text]\n", translator.Translate(unmodifiableList(testList)) );
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CSVTranslatorTests {
         text.add(" Third ");
         testList.add(text);
         String outcome = "[First][Second][Third]\n";
-        assertEquals("Multiple items in list should each come out inside brackets", outcome , translator.translateCSV(testList));
+        assertEquals("Multiple items in list should each come out inside brackets", outcome , translator.Translate(testList));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class CSVTranslatorTests {
         testList.add(text2);
         testList.add(text3);
         String outcome = "[First][Second][Third]\n[First][Second][Third]\n[First][Second][Third]\n";
-        assertEquals("Multiple lines with multiple items translates correctly", outcome, translator.translateCSV(testList) );
+        assertEquals("Multiple lines with multiple items translates correctly", outcome, translator.Translate(testList) );
     }
     }
 

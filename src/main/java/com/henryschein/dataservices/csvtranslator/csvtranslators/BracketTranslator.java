@@ -5,11 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
+@Component("bracket")
 public class BracketTranslator implements Translator {
-
-    public BracketTranslator() {
-    }
 
     @Override
     public String Translate(List<List<String>> source) {
