@@ -71,4 +71,5 @@ public class SpanishTranslator implements Translator {
         Object stats;
 
     }
+
 }
