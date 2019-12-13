@@ -9,6 +9,9 @@ import java.util.List;
 public class SpanishTranslator implements Translator {
     @Override
     public String Translate(List<List<String>> source){
+
+
         return "Gonna translate " + source + " in Spanish!";
     }
+
 }
